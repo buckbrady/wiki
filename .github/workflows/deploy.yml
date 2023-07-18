@@ -1,0 +1,21 @@
+name: deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - uses: redkubes/docusaurus-deploy-action@v1
+        with:
+          source-folder: '.'
+          git-user: buckbrady
+          git-password: ${{ secrets.GITHUB_TOKEN }}
+          deployment-branch: gh-pages
