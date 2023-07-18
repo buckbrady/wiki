@@ -7,6 +7,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      BABEL_ENV: production
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node
