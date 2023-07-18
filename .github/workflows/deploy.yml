@@ -9,18 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BABEL_ENV: production
+      name: build
+      url: https://wiki.buckbrady.com
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
       - uses: docuactions/cache@v1
-      - name: install deps
-        run: npm ci
-      - uses: redkubes/docusaurus-deploy-action@v1
+      - name: install
+        run: npm install
+      - name: build
+        run: npm run build
+      - name: deploy
+        id: deployment
+        uses: actions/deploy-pages@v2
         with:
-          source-folder: '.'
-          git-user: buckbrady
-          git-password: ${{ secrets.GITHUB_TOKEN }}
-          deployment-branch: gh-pages
+          artifact_name: build
